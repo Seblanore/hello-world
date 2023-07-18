@@ -15,43 +15,35 @@ export default {
     var spaceCircles = [
         {
             "name": "Categorie 1",
-            "color": "red",
-            "angle": 0
+            "color": "red"
         },
         {
             "name": "Categorie 2",
-            "color": "blue",
-            "angle": 30
+            "color": "blue"
         },
         {
             "name": "Categorie 3",
-            "color": "yellow",
-            "angle": 60
+            "color": "yellow"
         },
         {
             "name": "Categorie 3",
-            "color": "yellow",
-            "angle": 90
+            "color": "yellow"
         },
         {
             "name": "Categorie 3",
-            "color": "yellow",
-            "angle": 120
+            "color": "yellow"
         },
         {
             "name": "Categorie 3",
-            "color": "yellow",
-            "angle": 150
+            "color": "yellow"
         },
         {
             "name": "Categorie 3",
-            "color": "yellow",
-            "angle": 180
+            "color": "yellow"
         },
         {
             "name": "Categorie 3",
-            "color": "yellow",
-            "angle": 210
+            "color": "yellow"
         } 
       ];
 
@@ -65,24 +57,51 @@ export default {
       .append("circle");     
           
     circles
-      .attr("cx", function (d) { return width/2 + Math.sin(d.angle)*100; })
-      .attr("cy", function (d) { return height/2 + Math.cos(d.angle)*100; })
+      .attr("cx", function (d, i) { return width/2 + Math.sin(360/spaceCircles.length*i* (Math.PI / 180))*100; })
+      .attr("cy", function (d, i) { return height/2 - Math.cos(360/spaceCircles.length*i* (Math.PI / 180))*100; })
       .attr("r", 20 )
+      .attr('stroke', 'black')
       .style("fill", function(d) {
                 return d.color;
               });
 
+      // level 1
       svgContainer.append("circle")
       .attr("cx",width/2)
       .attr("cy",height/2)
       .attr("r", 100)
-      .style("fill", "red");
+      .attr('stroke', 'black')
+      .style("fill", "white");
 
+      // level 2
+      svgContainer.append("circle")
+      .attr("cx",width/2)
+      .attr("cy",height/2)
+      .attr("r", 220)
+      .attr('stroke', 'black')
+      .style("fill", "transparent");
+
+      // Center point
       svgContainer.append("circle")
       .attr("cx",width/2)
       .attr("cy",height/2)
       .attr("r", 2)
       .style("fill", "black");
+
+      var lines = svgContainer.selectAll("line")
+      .data(spaceCircles)
+      .enter()
+      .append("line"); 
+
+      lines
+      .style("stroke", "black")
+      .style("stroke-width", 1)
+      .attr("x1", width/2)
+      .attr("y1", height/2)
+      .attr("x2", function (d, i) { return width/2 + Math.sin(360/spaceCircles.length*i* (Math.PI / 180))*220; })
+      .attr("y2", function (d, i) { return height/2 - Math.cos(360/spaceCircles.length*i* (Math.PI / 180))*220; });
+
+      circles.raise();
   },
 };
 </script>
